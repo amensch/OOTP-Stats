@@ -79,13 +79,135 @@ Columns within a row are accessed via a numeric index.
 
         public List<BattingYear> LoadBatters()
         {
-            var data = GetData("Raw Hitting Data!A1:Q");
+            var data = GetData("Raw Hitting Data!A2:Q");
+            var list = new List<BattingYear>();
+            foreach (var row in data)
+            {
+                if (row.Count > 0 && ConvertToString(row, BattingYear.BattingYearIndex.Year) != string.Empty)
+                {
 
+                    var batter = new BattingYear(
+                        ConvertToString(row, BattingYear.BattingYearIndex.FirstName),
+                        ConvertToString(row, BattingYear.BattingYearIndex.LastName),
+                        ConvertToInt(row, BattingYear.BattingYearIndex.Year)
+                        );
+
+                    batter.AB = ConvertToInt(row, BattingYear.BattingYearIndex.AB);
+                    batter.Hits = ConvertToInt(row, BattingYear.BattingYearIndex.H);
+                    batter.HR = ConvertToInt(row, BattingYear.BattingYearIndex.HR);
+                    batter.RBI = ConvertToInt(row, BattingYear.BattingYearIndex.RBI);
+                    batter.K = ConvertToInt(row, BattingYear.BattingYearIndex.K);
+                    batter.BB = ConvertToInt(row, BattingYear.BattingYearIndex.BB);
+                    batter.Games = ConvertToInt(row, BattingYear.BattingYearIndex.G);
+                    batter.ExtraBaseHits = ConvertToInt(row, BattingYear.BattingYearIndex.XBH);
+                    batter.SB = ConvertToInt(row, BattingYear.BattingYearIndex.SB);
+                    batter.PA = ConvertToInt(row, BattingYear.BattingYearIndex.PA);
+                    batter.TB = ConvertToInt(row, BattingYear.BattingYearIndex.TB);
+
+                    list.Add(batter);
+                }
+            }
+
+            return list;
+        }
+
+        private int ConvertToInt(IList<object> row, BattingYear.BattingYearIndex index)
+        {
+            int value = 0;
+            int.TryParse(row[(int)index].ToString(), out value);
+            return value;
+        }
+
+        private int ConvertToInt(IList<object> row, PitchingYear.PitchingYearIndex index)
+        {
+            int value = 0;
+            int.TryParse(row[(int)index].ToString(), out value);
+            return value;
+        }
+
+        private string ConvertToString(IList<object> row, BattingYear.BattingYearIndex index)
+        {
+            return row[(int)index].ToString();
+        }
+
+        private string ConvertToString(IList<object> row, PitchingYear.PitchingYearIndex index)
+        {
+            return row[(int)index].ToString();
+        }
+
+        private int ConvertIPToOuts(IList<object> row)
+        {
+            int outs = 0;
+            string ip = ConvertToString(row, PitchingYear.PitchingYearIndex.IP);
+
+            if (ip.Contains(".0"))
+            {
+                ip = ip.Replace(".0", "");
+            }
+            else if ( ip.Contains(".1"))
+            {
+                outs += 1;
+                ip = ip.Replace(".1", "");
+            }
+            else if (ip.Contains(".2"))
+            {
+                outs += 2;
+                ip = ip.Replace(".2", "");
+            }
+            else if (ip.Contains(".3"))
+            {
+                outs += 1;
+                ip = ip.Replace(".3", "");
+            }
+            else if (ip.Contains(".6"))
+            {
+                outs += 2;
+                ip = ip.Replace(".6", "");
+            }
+            else if (ip.Contains(".7"))
+            {
+                outs += 2;
+                ip = ip.Replace(".7", "");
+            }
+
+            int ip_int = 0;
+            int.TryParse(ip, out ip_int);
+
+            return (ip_int * 3) + outs;
         }
 
         public List<PitchingYear> LoadPitchers()
         {
-            throw new NotImplementedException();
+            var data = GetData("Raw Pitching Data!A2:P");
+            var list = new List<PitchingYear>();
+            foreach (var row in data)
+            {
+                if (row.Count > 0 && ConvertToString(row, PitchingYear.PitchingYearIndex.Year) != string.Empty)
+                {
+
+                    var pitcher = new PitchingYear(
+                        ConvertToString(row, PitchingYear.PitchingYearIndex.FirstName),
+                        ConvertToString(row, PitchingYear.PitchingYearIndex.LastName),
+                        ConvertToInt(row, PitchingYear.PitchingYearIndex.Year)
+                        );
+
+                    pitcher.BB = ConvertToInt(row, PitchingYear.PitchingYearIndex.BB);
+                    pitcher.ER = ConvertToInt(row, PitchingYear.PitchingYearIndex.ER);
+                    pitcher.Games = ConvertToInt(row, PitchingYear.PitchingYearIndex.G);
+                    pitcher.GS = ConvertToInt(row, PitchingYear.PitchingYearIndex.GS);
+                    pitcher.Hits = ConvertToInt(row, PitchingYear.PitchingYearIndex.H);
+                    pitcher.HR = ConvertToInt(row, PitchingYear.PitchingYearIndex.HR);
+                    pitcher.K = ConvertToInt(row, PitchingYear.PitchingYearIndex.K);
+                    pitcher.Loss = ConvertToInt(row, PitchingYear.PitchingYearIndex.Loss);
+                    pitcher.Outs = ConvertIPToOuts(row);
+                    pitcher.Saves = ConvertToInt(row, PitchingYear.PitchingYearIndex.Save);
+                    pitcher.Wins = ConvertToInt(row, PitchingYear.PitchingYearIndex.Win);
+
+                    list.Add(pitcher);
+                }
+            }
+
+            return list;
         }
 
 

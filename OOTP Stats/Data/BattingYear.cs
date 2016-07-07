@@ -8,17 +8,17 @@ namespace OOTP_Stats
 {
     public class BattingYear : PlayerYear
     {
-        public int AB { get; }
-        public int Hits { get; }
-        public int HR { get; }
-        public int RBI { get; }
-        public int K { get; }
-        public int BB { get; }
-        public int Games { get; }
-        public int ExtraBaseHits { get; }
-        public int SB { get; }
-        public int PA { get; }
-        public int TB { get; }
+        public int AB { get; set; }
+        public int Hits { get; set; }
+        public int HR { get; set; }
+        public int RBI { get; set; }
+        public int K { get; set; }
+        public int BB { get; set; }
+        public int Games { get; set; }
+        public int ExtraBaseHits { get; set; }
+        public int SB { get; set; }
+        public int PA { get; set; }
+        public int TB { get; set; }
 
         public enum BattingYearIndex
         {
