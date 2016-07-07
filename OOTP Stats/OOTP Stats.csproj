@@ -86,19 +86,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\BattingYear.cs" />
-    <Compile Include="Data\PitchingYear.cs" />
-    <Compile Include="Data\PlayerYear.cs" />
-    <Compile Include="Data\PlayerYearList.cs" />
+    <Compile Include="Data Access\BattingStats.cs" />
+    <Compile Include="Data Access\Stats.cs" />
+    <Compile Include="Data Import\IDataStore.cs" />
+    <Compile Include="Data Objects\BattingYear.cs" />
+    <Compile Include="Data Access\PitchingStats.cs" />
+    <Compile Include="Data Objects\PitchingYear.cs" />
+    <Compile Include="Data Objects\PlayerYear.cs" />
+    <Compile Include="Data Objects\PlayerYearList.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Import\GoogleSheetsData.cs" />
-    <Compile Include="Import\IBattingData.cs" />
-    <Compile Include="Import\IPitchingData.cs" />
+    <Compile Include="Data Import\GoogleSheetsData.cs" />
+    <Compile Include="Data Import\IBattingData.cs" />
+    <Compile Include="Data Import\IPitchingData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

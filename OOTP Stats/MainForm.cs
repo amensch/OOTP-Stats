@@ -12,15 +12,14 @@ namespace OOTP_Stats
 {
     public partial class MainForm : Form
     {
+        private Stats _stats;
+
         public MainForm()
         {
             InitializeComponent();
 
-            var import = new GoogleSheetsData();
-
-            var batters = import.LoadBatters();
-            var pitchers = import.LoadPitchers();
-
+            GoogleSheetsData data = new GoogleSheetsData();
+            _stats = new Stats(data);
         }
     }
 }

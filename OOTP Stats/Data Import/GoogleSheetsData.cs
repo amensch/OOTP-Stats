@@ -13,7 +13,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 namespace OOTP_Stats
 {
-    public class GoogleSheetsData : IBattingData, IPitchingData
+    public class GoogleSheetsData : IDataStore
     {
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
@@ -28,54 +28,6 @@ namespace OOTP_Stats
             Connect();
         }
 
-        private void Connect()
-        {
-            UserCredential credential;
-
-            using (var stream =
-                new FileStream("client_id.json", FileMode.Open, FileAccess.Read))
-            {
-                string credPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.Personal);
-                credPath = Path.Combine(credPath, ".credentials/sheets.googleapis.com-ootp-stats.json");
-
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "adam@menschwi.com",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
-            }
-
-            service = new SheetsService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-        }
-
-        public IList<IList<object>> GetData(string range)
-        {
-            var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
-
-            var response = request.Execute();
-            return response.Values;
-        }
-
-        /*
-The values collection does not go outside of the desired range.
-Columns within a row are accessed via a numeric index.
-
-        foreach (var row in values )
-        {
-            txtList.Text += Environment.NewLine;
-            foreach (var item in row )
-            {
-                txtList.Text += item.ToString() + ",";
-            }
-        }
-*/
 
         public List<BattingYear> LoadBatters()
         {
@@ -110,6 +62,89 @@ Columns within a row are accessed via a numeric index.
 
             return list;
         }
+
+        public List<PitchingYear> LoadPitchers()
+        {
+            var data = GetData("Raw Pitching Data!A2:P");
+            var list = new List<PitchingYear>();
+            foreach (var row in data)
+            {
+                if (row.Count > 0 && ConvertToString(row, PitchingYear.PitchingYearIndex.Year) != string.Empty)
+                {
+
+                    var pitcher = new PitchingYear(
+                        ConvertToString(row, PitchingYear.PitchingYearIndex.FirstName),
+                        ConvertToString(row, PitchingYear.PitchingYearIndex.LastName),
+                        ConvertToInt(row, PitchingYear.PitchingYearIndex.Year)
+                        );
+
+                    pitcher.BB = ConvertToInt(row, PitchingYear.PitchingYearIndex.BB);
+                    pitcher.ER = ConvertToInt(row, PitchingYear.PitchingYearIndex.ER);
+                    pitcher.Games = ConvertToInt(row, PitchingYear.PitchingYearIndex.G);
+                    pitcher.GS = ConvertToInt(row, PitchingYear.PitchingYearIndex.GS);
+                    pitcher.Hits = ConvertToInt(row, PitchingYear.PitchingYearIndex.H);
+                    pitcher.HR = ConvertToInt(row, PitchingYear.PitchingYearIndex.HR);
+                    pitcher.K = ConvertToInt(row, PitchingYear.PitchingYearIndex.K);
+                    pitcher.Loss = ConvertToInt(row, PitchingYear.PitchingYearIndex.Loss);
+                    pitcher.Outs = ConvertIPToOuts(row);
+                    pitcher.Saves = ConvertToInt(row, PitchingYear.PitchingYearIndex.Save);
+                    pitcher.Wins = ConvertToInt(row, PitchingYear.PitchingYearIndex.Win);
+
+                    list.Add(pitcher);
+                }
+            }
+
+            return list;
+        }
+
+        private void Connect()
+        {
+            UserCredential credential;
+
+            using (var stream =
+                new FileStream("client_id.json", FileMode.Open, FileAccess.Read))
+            {
+                string credPath = System.Environment.GetFolderPath(
+                    System.Environment.SpecialFolder.Personal);
+                credPath = Path.Combine(credPath, ".credentials/sheets.googleapis.com-ootp-stats.json");
+
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    Scopes,
+                    "adam@menschwi.com",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " + credPath);
+            }
+
+            service = new SheetsService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
+        }
+
+        private IList<IList<object>> GetData(string range)
+        {
+            var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
+
+            var response = request.Execute();
+            return response.Values;
+        }
+
+        /*
+The values collection does not go outside of the desired range.
+Columns within a row are accessed via a numeric index.
+
+        foreach (var row in values )
+        {
+            txtList.Text += Environment.NewLine;
+            foreach (var item in row )
+            {
+                txtList.Text += item.ToString() + ",";
+            }
+        }
+*/
 
         private int ConvertToInt(IList<object> row, BattingYear.BattingYearIndex index)
         {
@@ -175,42 +210,5 @@ Columns within a row are accessed via a numeric index.
 
             return (ip_int * 3) + outs;
         }
-
-        public List<PitchingYear> LoadPitchers()
-        {
-            var data = GetData("Raw Pitching Data!A2:P");
-            var list = new List<PitchingYear>();
-            foreach (var row in data)
-            {
-                if (row.Count > 0 && ConvertToString(row, PitchingYear.PitchingYearIndex.Year) != string.Empty)
-                {
-
-                    var pitcher = new PitchingYear(
-                        ConvertToString(row, PitchingYear.PitchingYearIndex.FirstName),
-                        ConvertToString(row, PitchingYear.PitchingYearIndex.LastName),
-                        ConvertToInt(row, PitchingYear.PitchingYearIndex.Year)
-                        );
-
-                    pitcher.BB = ConvertToInt(row, PitchingYear.PitchingYearIndex.BB);
-                    pitcher.ER = ConvertToInt(row, PitchingYear.PitchingYearIndex.ER);
-                    pitcher.Games = ConvertToInt(row, PitchingYear.PitchingYearIndex.G);
-                    pitcher.GS = ConvertToInt(row, PitchingYear.PitchingYearIndex.GS);
-                    pitcher.Hits = ConvertToInt(row, PitchingYear.PitchingYearIndex.H);
-                    pitcher.HR = ConvertToInt(row, PitchingYear.PitchingYearIndex.HR);
-                    pitcher.K = ConvertToInt(row, PitchingYear.PitchingYearIndex.K);
-                    pitcher.Loss = ConvertToInt(row, PitchingYear.PitchingYearIndex.Loss);
-                    pitcher.Outs = ConvertIPToOuts(row);
-                    pitcher.Saves = ConvertToInt(row, PitchingYear.PitchingYearIndex.Save);
-                    pitcher.Wins = ConvertToInt(row, PitchingYear.PitchingYearIndex.Win);
-
-                    list.Add(pitcher);
-                }
-            }
-
-            return list;
-        }
-
-
-
     }
 }
