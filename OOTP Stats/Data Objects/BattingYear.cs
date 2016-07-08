@@ -69,6 +69,11 @@ namespace OOTP_Stats
             }
         }
 
+        public double ABperHR
+        {
+            get { return (double)AB / (double)HR; }
+        }
+
 
     }
 }

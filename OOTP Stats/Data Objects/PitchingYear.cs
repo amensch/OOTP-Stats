@@ -85,5 +85,26 @@ namespace OOTP_Stats
             }
         }
 
+        public double Kper9
+        {
+            get
+            {
+                if (Outs == 0)
+                    return 0;
+                else
+                    return ((double)K * 9) / ((double)Outs / 3);
+            }
+        }
+
+        public double BBper9
+        {
+            get
+            {
+                if (Outs == 0)
+                    return 0;
+                else
+                    return ((double)BB * 9) / ((double)Outs / 3);
+            }
+        }
     }
 }

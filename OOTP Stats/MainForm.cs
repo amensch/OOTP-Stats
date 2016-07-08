@@ -53,7 +53,6 @@ namespace OOTP_Stats
 
         private void tsbBatters_Click(object sender, EventArgs e)
         {
-            // determine buttons
             tsbBatters.Checked = true;
             tsbPitchers.Checked = false;
 
@@ -62,7 +61,6 @@ namespace OOTP_Stats
 
         private void tsbPitchers_Click(object sender, EventArgs e)
         {
-            // button state
             tsbBatters.Checked = false;
             tsbPitchers.Checked = true;
 
@@ -74,6 +72,7 @@ namespace OOTP_Stats
             tsbSingleSeason.Checked = true;
             tsbCareer.Checked = false;
             tsbYearByYear.Checked = false;
+            tsbTeam.Checked = false;
 
             RefreshGrid();
         }
@@ -83,6 +82,7 @@ namespace OOTP_Stats
             tsbSingleSeason.Checked = false;
             tsbCareer.Checked = true;
             tsbYearByYear.Checked = false;
+            tsbTeam.Checked = false;
 
             RefreshGrid();
         }
@@ -92,6 +92,17 @@ namespace OOTP_Stats
             tsbSingleSeason.Checked = false;
             tsbCareer.Checked = false;
             tsbYearByYear.Checked = true;
+            tsbTeam.Checked = false;
+
+            RefreshGrid();
+        }
+
+        private void tsbTeam_Click(object sender, EventArgs e)
+        {
+            tsbSingleSeason.Checked = false;
+            tsbCareer.Checked = false;
+            tsbYearByYear.Checked = false;
+            tsbTeam.Checked = true;
 
             RefreshGrid();
         }
@@ -126,7 +137,13 @@ namespace OOTP_Stats
                 }
                 else if (tsbYearByYear.Checked)
                 {
+                    _stats.Batters.YearByYear("PA");
                     // TODO
+                }
+                else if( tsbTeam.Checked)
+                {
+                    dgView.DataSource = _stats.Batters.GetTeamList(sortColumnName);
+                    newsource = true;
                 }
 
                 if (newsource)
@@ -139,6 +156,7 @@ namespace OOTP_Stats
                     // format decimal columns
                     dgView.Columns["AVG"].DefaultCellStyle.Format = "F3";
                     dgView.Columns["SLG"].DefaultCellStyle.Format = "F3";
+                    dgView.Columns["ABperHR"].DefaultCellStyle.Format = "F1";
 
                     // hide columns
                     dgView.Columns["FirstName"].Visible = false;
@@ -174,6 +192,11 @@ namespace OOTP_Stats
                 {
                     // TODO
                 }
+                else if (tsbTeam.Checked)
+                {
+                    dgView.DataSource = _stats.Pitchers.GetTeamList(sortColumnName);
+                    newsource = true;
+                }
 
                 if (newsource)
                 {
@@ -184,6 +207,8 @@ namespace OOTP_Stats
                     // format decimal columns
                     dgView.Columns["ERA"].DefaultCellStyle.Format = "F2";
                     dgView.Columns["WHIP"].DefaultCellStyle.Format = "F2";
+                    dgView.Columns["Kper9"].DefaultCellStyle.Format = "F1";
+                    dgView.Columns["BBper9"].DefaultCellStyle.Format = "F1";
 
                     // hide columns
                     dgView.Columns["FirstName"].Visible = false;
@@ -197,5 +222,6 @@ namespace OOTP_Stats
                 }
             }
         }
+
     }
 }

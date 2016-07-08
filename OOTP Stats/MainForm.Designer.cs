@@ -36,6 +36,7 @@
             this.tsbYearByYear = new System.Windows.Forms.ToolStripButton();
             this.tsbCareer = new System.Windows.Forms.ToolStripButton();
             this.tsbSingleSeason = new System.Windows.Forms.ToolStripButton();
+            this.tsbTeam = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -61,7 +62,8 @@
             this.tsbPitchers,
             this.tsbYearByYear,
             this.tsbCareer,
-            this.tsbSingleSeason});
+            this.tsbSingleSeason,
+            this.tsbTeam});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(916, 25);
@@ -126,6 +128,18 @@
             this.tsbSingleSeason.Text = "Single Season";
             this.tsbSingleSeason.Click += new System.EventHandler(this.tsbSingleSeason_Click);
             // 
+            // tsbTeam
+            // 
+            this.tsbTeam.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbTeam.CheckOnClick = true;
+            this.tsbTeam.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbTeam.Image = ((System.Drawing.Image)(resources.GetObject("tsbTeam.Image")));
+            this.tsbTeam.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbTeam.Name = "tsbTeam";
+            this.tsbTeam.Size = new System.Drawing.Size(41, 22);
+            this.tsbTeam.Text = "Team";
+            this.tsbTeam.Click += new System.EventHandler(this.tsbTeam_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -152,6 +166,7 @@
         private System.Windows.Forms.ToolStripButton tsbYearByYear;
         private System.Windows.Forms.ToolStripButton tsbCareer;
         private System.Windows.Forms.ToolStripButton tsbSingleSeason;
+        private System.Windows.Forms.ToolStripButton tsbTeam;
     }
 }
 

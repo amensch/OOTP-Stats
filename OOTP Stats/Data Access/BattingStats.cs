@@ -53,5 +53,57 @@ namespace OOTP_Stats
         {
             return GetCareerList().OrderByDescending(b => b.GetType().GetProperty(sortColumnName).GetValue(b, null)).ToList();
         }
+
+        public List<BattingYear> GetTeamList()
+        {
+            return _batters.GroupBy(b => new { b.Year })
+                .Select(y => new BattingYear
+                {
+                    Year = y.Min(z => z.Year),
+                    Games = y.Sum(z => z.Games),
+                    PA = y.Sum(z => z.PA),
+                    AB = y.Sum(z => z.AB),
+                    Hits = y.Sum(z => z.Hits),
+                    HR = y.Sum(z => z.HR),
+                    RBI = y.Sum(z => z.RBI),
+                    K = y.Sum(z => z.K),
+                    BB = y.Sum(z => z.BB),
+                    SB = y.Sum(z => z.SB),
+                    XBH = y.Sum(z => z.XBH),
+                    TB = y.Sum(z => z.TB)
+                }).ToList();
+        }
+
+        public List<BattingYear> GetTeamList(string sortColumnName)
+        {
+            return GetTeamList().OrderByDescending(b => b.GetType().GetProperty(sortColumnName).GetValue(b, null)).ToList();
+        }
+
+        public List<YearByYearQuery> YearByYear(string columnName)
+        {
+            //BattingYear batter = new BattingYear();
+
+            //if( batter.GetType().GetProperty(columnName).PropertyType == typeof(int) )
+            //{
+
+            //}
+            //else if (batter.GetType().GetProperty(columnName).PropertyType == typeof(double))
+            //{
+
+            //}
+            //else if (batter.GetType().GetProperty(columnName).PropertyType == typeof(string))
+            //{
+
+            //}
+
+            return _batters.GroupBy(b => new { b.Year })
+                           .Select(y => new YearByYearQuery
+                           {
+                               Year = y.Min( z => z.Year),
+                               Name = y.Min( z => z.FullName ),
+                               Result = (double)y.Max( p => p.GetType().GetProperty(columnName).GetValue(p, null) )
+                           }).ToList();
+
+        }
     }
 }

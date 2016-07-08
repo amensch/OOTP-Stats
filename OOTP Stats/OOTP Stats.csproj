@@ -94,6 +94,7 @@
     <Compile Include="Data Objects\PitchingYear.cs" />
     <Compile Include="Data Objects\PlayerYear.cs" />
     <Compile Include="Data Objects\PlayerYearList.cs" />
+    <Compile Include="Data Objects\YearByYearQuery.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
