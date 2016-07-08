@@ -109,11 +109,19 @@ namespace OOTP_Stats
                 if (tsbSingleSeason.Checked)
                 {
                     dgView.DataSource = _stats.Batters.GetBattingList(sortColumnName);
+
+                    // hide columns
+                    dgView.Columns["Years"].Visible = false;
+
                     newsource = true;
                 }
                 else if (tsbCareer.Checked)
                 {
                     dgView.DataSource = _stats.Batters.GetCareerList(sortColumnName);
+
+                    // show columns
+                    dgView.Columns["Years"].Visible = true;
+
                     newsource = true;
                 }
                 else if (tsbYearByYear.Checked)
@@ -126,6 +134,7 @@ namespace OOTP_Stats
                     // reorder columns
                     dgView.Columns["Year"].DisplayIndex = 0;
                     dgView.Columns["FullName"].DisplayIndex = 1;
+                    dgView.Columns["Years"].DisplayIndex = 2;
 
                     // format decimal columns
                     dgView.Columns["AVG"].DefaultCellStyle.Format = "F3";
@@ -134,6 +143,8 @@ namespace OOTP_Stats
                     // hide columns
                     dgView.Columns["FirstName"].Visible = false;
                     dgView.Columns["LastName"].Visible = false;
+                    dgView.Columns["FirstYear"].Visible = false;
+                    dgView.Columns["LastYear"].Visible = false;
 
                     // resize columns to fit
                     dgView.AutoResizeColumns();
@@ -144,11 +155,19 @@ namespace OOTP_Stats
                 if (tsbSingleSeason.Checked)
                 {
                     dgView.DataSource = _stats.Pitchers.GetPitchersList(sortColumnName);
+
+                    // hide columns
+                    dgView.Columns["Years"].Visible = false;
+
                     newsource = true;
                 }
                 else if (tsbCareer.Checked)
                 {
                     dgView.DataSource = _stats.Pitchers.GetCareerList(sortColumnName);
+
+                    // hide columns
+                    dgView.Columns["Years"].Visible = true;
+
                     newsource = true;
                 }
                 else if (tsbYearByYear.Checked)
@@ -160,6 +179,7 @@ namespace OOTP_Stats
                 {
                     dgView.Columns["Year"].DisplayIndex = 0;
                     dgView.Columns["FullName"].DisplayIndex = 1;
+                    dgView.Columns["Years"].DisplayIndex = 2;
 
                     // format decimal columns
                     dgView.Columns["ERA"].DefaultCellStyle.Format = "F2";
@@ -168,6 +188,8 @@ namespace OOTP_Stats
                     // hide columns
                     dgView.Columns["FirstName"].Visible = false;
                     dgView.Columns["LastName"].Visible = false;
+                    dgView.Columns["FirstYear"].Visible = false;
+                    dgView.Columns["LastYear"].Visible = false;
                     dgView.Columns["Outs"].Visible = false;
 
                     // resize columns to fit

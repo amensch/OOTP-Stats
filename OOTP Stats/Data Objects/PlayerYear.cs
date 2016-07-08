@@ -10,14 +10,19 @@ namespace OOTP_Stats
     public class PlayerYear : IEquatable<PlayerYear>, IComparable<PlayerYear>
     {
         public int Year { get; set; }
-
         public string FirstName { get; set; }
-
         public string LastName { get; set; }
+        public int FirstYear { get; set; }
+        public int LastYear { get; set; }
 
         public string FullName
         {
             get { return FirstName + " " + LastName; }
+        }
+
+        public string Years
+        {
+            get { return FirstYear.ToString() + "-" + LastYear.ToString(); }
         }
 
         public PlayerYear( string first, string last, int year )

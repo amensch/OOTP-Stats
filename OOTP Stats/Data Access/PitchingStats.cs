@@ -35,6 +35,8 @@ namespace OOTP_Stats
                     Year = y.Count(),
                     FirstName = y.Min(z => z.FirstName),
                     LastName = y.Min(z => z.LastName),
+                    FirstYear = y.Min(z => z.Year),
+                    LastYear = y.Max(z => z.Year),
                     Games = y.Sum(z => z.Games),
                     GS = y.Sum(z => z.GS),
                     Wins = y.Sum(z => z.Wins),
