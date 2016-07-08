@@ -19,8 +19,6 @@ namespace OOTP_Stats
         public int HR { get; set; }
         public int Hits { get; set; }
         public int ER { get; set; }
-
-        [Browsable(false)]
         public int Outs { get; set; }
 
         public enum PitchingYearIndex
@@ -42,6 +40,9 @@ namespace OOTP_Stats
             H,
             ER
         };
+
+        public PitchingYear() : base ("","",0)
+        { }
 
         public PitchingYear(string first, string last, int year) : base(first, last, year)
         { }

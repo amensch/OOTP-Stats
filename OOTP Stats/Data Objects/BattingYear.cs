@@ -41,6 +41,9 @@ namespace OOTP_Stats
             TB
         };
 
+        public BattingYear() : base ("","",0)
+        { }
+
         public BattingYear(string first, string last, int year) : base(first, last, year)
         { }
 

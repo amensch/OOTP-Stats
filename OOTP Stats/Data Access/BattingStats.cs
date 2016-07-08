@@ -20,18 +20,19 @@ namespace OOTP_Stats
              return _batters; 
         }
 
-        public List<BattingYear> GetBattingList(string name)
+        public List<BattingYear> GetBattingList(string sortColumnName)
         {
-            return _batters = _batters.OrderByDescending(b => b.GetType().GetProperty(name).GetValue(b, null)).ToList();
+            return _batters = _batters.OrderByDescending(b => b.GetType().GetProperty(sortColumnName).GetValue(b, null)).ToList();
         }
 
-
-        // TODO make IQueryable with a new career object
-        public IQueryable GetCareerList()
+        public List<BattingYear> GetCareerList()
         {
-            var list = _batters.GroupBy(b => new { b.FullName })
-                .Select(y => new
+            return _batters.GroupBy(b => new { b.FullName })
+                .Select(y => new BattingYear
                 {
+                    Year = y.Count(),
+                    FirstName = y.Min( z => z.FirstName),
+                    LastName = y.Min( z => z.LastName),
                     Games = y.Sum(z => z.Games),
                     PA = y.Sum(z => z.PA),
                     AB = y.Sum(z => z.AB),
@@ -44,7 +45,11 @@ namespace OOTP_Stats
                     XBH = y.Sum(z => z.XBH),
                     TB = y.Sum(z => z.TB)
                 }).ToList();
-            return list.;
+        }
+
+        public List<BattingYear> GetCareerList(string sortColumnName)
+        {
+            return GetCareerList().OrderByDescending(b => b.GetType().GetProperty(sortColumnName).GetValue(b, null)).ToList();
         }
     }
 }

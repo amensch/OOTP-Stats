@@ -33,9 +33,9 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbBatters = new System.Windows.Forms.ToolStripButton();
             this.tsbPitchers = new System.Windows.Forms.ToolStripButton();
-            this.tsbSingleSeason = new System.Windows.Forms.ToolStripButton();
-            this.tsbCareer = new System.Windows.Forms.ToolStripButton();
             this.tsbYearByYear = new System.Windows.Forms.ToolStripButton();
+            this.tsbCareer = new System.Windows.Forms.ToolStripButton();
+            this.tsbSingleSeason = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -90,16 +90,17 @@
             this.tsbPitchers.Text = "Pitchers";
             this.tsbPitchers.Click += new System.EventHandler(this.tsbPitchers_Click);
             // 
-            // tsbSingleSeason
+            // tsbYearByYear
             // 
-            this.tsbSingleSeason.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbSingleSeason.CheckOnClick = true;
-            this.tsbSingleSeason.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsbSingleSeason.Image = ((System.Drawing.Image)(resources.GetObject("tsbSingleSeason.Image")));
-            this.tsbSingleSeason.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbSingleSeason.Name = "tsbSingleSeason";
-            this.tsbSingleSeason.Size = new System.Drawing.Size(83, 22);
-            this.tsbSingleSeason.Text = "Single Season";
+            this.tsbYearByYear.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbYearByYear.CheckOnClick = true;
+            this.tsbYearByYear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbYearByYear.Image = ((System.Drawing.Image)(resources.GetObject("tsbYearByYear.Image")));
+            this.tsbYearByYear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbYearByYear.Name = "tsbYearByYear";
+            this.tsbYearByYear.Size = new System.Drawing.Size(76, 22);
+            this.tsbYearByYear.Text = "Year by Year";
+            this.tsbYearByYear.Click += new System.EventHandler(this.tsbYearByYear_Click);
             // 
             // tsbCareer
             // 
@@ -111,17 +112,19 @@
             this.tsbCareer.Name = "tsbCareer";
             this.tsbCareer.Size = new System.Drawing.Size(45, 22);
             this.tsbCareer.Text = "Career";
+            this.tsbCareer.Click += new System.EventHandler(this.tsbCareer_Click);
             // 
-            // tsbYearByYear
+            // tsbSingleSeason
             // 
-            this.tsbYearByYear.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbYearByYear.CheckOnClick = true;
-            this.tsbYearByYear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsbYearByYear.Image = ((System.Drawing.Image)(resources.GetObject("tsbYearByYear.Image")));
-            this.tsbYearByYear.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbYearByYear.Name = "tsbYearByYear";
-            this.tsbYearByYear.Size = new System.Drawing.Size(74, 22);
-            this.tsbYearByYear.Text = "Year by Year";
+            this.tsbSingleSeason.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbSingleSeason.CheckOnClick = true;
+            this.tsbSingleSeason.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbSingleSeason.Image = ((System.Drawing.Image)(resources.GetObject("tsbSingleSeason.Image")));
+            this.tsbSingleSeason.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSingleSeason.Name = "tsbSingleSeason";
+            this.tsbSingleSeason.Size = new System.Drawing.Size(83, 22);
+            this.tsbSingleSeason.Text = "Single Season";
+            this.tsbSingleSeason.Click += new System.EventHandler(this.tsbSingleSeason_Click);
             // 
             // MainForm
             // 

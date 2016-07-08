@@ -29,14 +29,13 @@ namespace OOTP_Stats
 
             GoogleSheetsData data = new GoogleSheetsData();
             _stats = new Stats(data);
+
+            tsbSingleSeason.Checked = true;
         }
 
         private void DgView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if( tsbBatters.Checked )
-                dgView.DataSource = _stats.Batters.GetBattingList(dgView.Columns[e.ColumnIndex].Name);
-            else
-                dgView.DataSource = _stats.Pitchers.GetPitchersList(dgView.Columns[e.ColumnIndex].Name);
+            RefreshGrid(dgView.Columns[e.ColumnIndex].Name);
         }
 
         private void CheckedChangedFormat(object sender, EventArgs e)
@@ -54,40 +53,127 @@ namespace OOTP_Stats
 
         private void tsbBatters_Click(object sender, EventArgs e)
         {
-            dgView.DataSource = _stats.Batters.GetBattingList();
-
-            // reorder columns
-            dgView.Columns["Year"].DisplayIndex = 0;
-            dgView.Columns["FullName"].DisplayIndex = 1;
-
-            // format decimal columns
-            dgView.Columns["AVG"].DefaultCellStyle.Format = "F3";
-            dgView.Columns["SLG"].DefaultCellStyle.Format = "F3";
-
-            // resize columns to fit
-            dgView.AutoResizeColumns();
-
             // determine buttons
             tsbBatters.Checked = true;
             tsbPitchers.Checked = false;
+
+            RefreshGrid();
         }
 
         private void tsbPitchers_Click(object sender, EventArgs e)
         {
-            dgView.DataSource = _stats.Pitchers.GetPitchersList();
-            dgView.Columns["Year"].DisplayIndex = 0;
-            dgView.Columns["FullName"].DisplayIndex = 1;
-
-            // format decimal columns
-            dgView.Columns["ERA"].DefaultCellStyle.Format = "F2";
-            dgView.Columns["WHIP"].DefaultCellStyle.Format = "F2";
-
-            // resize columns to fit
-            dgView.AutoResizeColumns();
-
             // button state
             tsbBatters.Checked = false;
             tsbPitchers.Checked = true;
+
+            RefreshGrid();
+        }
+
+        private void tsbSingleSeason_Click(object sender, EventArgs e)
+        {
+            tsbSingleSeason.Checked = true;
+            tsbCareer.Checked = false;
+            tsbYearByYear.Checked = false;
+
+            RefreshGrid();
+        }
+
+        private void tsbCareer_Click(object sender, EventArgs e)
+        {
+            tsbSingleSeason.Checked = false;
+            tsbCareer.Checked = true;
+            tsbYearByYear.Checked = false;
+
+            RefreshGrid();
+        }
+
+        private void tsbYearByYear_Click(object sender, EventArgs e)
+        {
+            tsbSingleSeason.Checked = false;
+            tsbCareer.Checked = false;
+            tsbYearByYear.Checked = true;
+
+            RefreshGrid();
+        }
+
+        private void RefreshGrid()
+        {
+            RefreshGrid("Year");
+        }
+
+        private void RefreshGrid(string sortColumnName)
+        {
+            bool newsource = false;
+            if (tsbBatters.Checked)
+            {
+                if (tsbSingleSeason.Checked)
+                {
+                    dgView.DataSource = _stats.Batters.GetBattingList(sortColumnName);
+                    newsource = true;
+                }
+                else if (tsbCareer.Checked)
+                {
+                    dgView.DataSource = _stats.Batters.GetCareerList(sortColumnName);
+                    newsource = true;
+                }
+                else if (tsbYearByYear.Checked)
+                {
+                    // TODO
+                }
+
+                if (newsource)
+                {
+                    // reorder columns
+                    dgView.Columns["Year"].DisplayIndex = 0;
+                    dgView.Columns["FullName"].DisplayIndex = 1;
+
+                    // format decimal columns
+                    dgView.Columns["AVG"].DefaultCellStyle.Format = "F3";
+                    dgView.Columns["SLG"].DefaultCellStyle.Format = "F3";
+
+                    // hide columns
+                    dgView.Columns["FirstName"].Visible = false;
+                    dgView.Columns["LastName"].Visible = false;
+
+                    // resize columns to fit
+                    dgView.AutoResizeColumns();
+                }
+            }
+            else if (tsbPitchers.Checked)
+            {
+                if (tsbSingleSeason.Checked)
+                {
+                    dgView.DataSource = _stats.Pitchers.GetPitchersList(sortColumnName);
+                    newsource = true;
+                }
+                else if (tsbCareer.Checked)
+                {
+                    dgView.DataSource = _stats.Pitchers.GetCareerList(sortColumnName);
+                    newsource = true;
+                }
+                else if (tsbYearByYear.Checked)
+                {
+                    // TODO
+                }
+
+                if (newsource)
+                {
+                    dgView.Columns["Year"].DisplayIndex = 0;
+                    dgView.Columns["FullName"].DisplayIndex = 1;
+
+                    // format decimal columns
+                    dgView.Columns["ERA"].DefaultCellStyle.Format = "F2";
+                    dgView.Columns["WHIP"].DefaultCellStyle.Format = "F2";
+
+                    // hide columns
+                    dgView.Columns["FirstName"].Visible = false;
+                    dgView.Columns["LastName"].Visible = false;
+                    dgView.Columns["Outs"].Visible = false;
+
+                    // resize columns to fit
+                    dgView.AutoResizeColumns();
+                }
+            }
         }
     }
 }
