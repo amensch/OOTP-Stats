@@ -8,16 +8,16 @@ namespace OOTP_Stats
 {
     public class BattingYear : PlayerYear
     {
+        public int Games { get; set; }
+        public int PA { get; set; }
         public int AB { get; set; }
         public int Hits { get; set; }
         public int HR { get; set; }
         public int RBI { get; set; }
         public int K { get; set; }
         public int BB { get; set; }
-        public int Games { get; set; }
-        public int ExtraBaseHits { get; set; }
         public int SB { get; set; }
-        public int PA { get; set; }
+        public int XBH { get; set; }
         public int TB { get; set; }
 
         public enum BattingYearIndex
@@ -46,12 +46,24 @@ namespace OOTP_Stats
 
         public double AVG
         {
-            get { return Hits / AB; }
+            get
+            {
+                if (AB == 0)
+                    return 0;
+                else
+                    return (double)Hits / (double)AB;
+            }
         }
 
         public double SLG
         {
-            get { return TB / AB; }
+            get
+            {
+                if (AB == 0)
+                    return 0;
+                else
+                    return (double)TB / (double)AB;
+            }
         }
 
 

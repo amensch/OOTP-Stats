@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace OOTP_Stats
         public int HR { get; set; }
         public int Hits { get; set; }
         public int ER { get; set; }
+
+        [Browsable(false)]
         public int Outs { get; set; }
 
         public enum PitchingYearIndex
@@ -43,6 +46,21 @@ namespace OOTP_Stats
         public PitchingYear(string first, string last, int year) : base(first, last, year)
         { }
 
+        public double IP
+        {
+            get
+            {
+                double ip = Outs / 3;
+                int frac = Outs % 3;
+                if (frac == 1)
+                    ip += .1;
+                else if (frac == 2)
+                    ip += .2;
+
+                return ip;
+            }
+        }
+
         public double ERA
         {
             get
@@ -50,7 +68,7 @@ namespace OOTP_Stats
                 if (Outs == 0)
                     return double.PositiveInfinity;
                 else
-                    return (ER * 9) / (Outs / 3);
+                    return ((double)ER * 9) / ((double)Outs / 3);
             }
         }
 
@@ -61,7 +79,7 @@ namespace OOTP_Stats
                 if (Outs == 0)
                     return double.PositiveInfinity;
                 else
-                    return (BB + Hits) / (Outs / 3);
+                    return (BB + Hits) / ((double)Outs / 3);
 
             }
         }

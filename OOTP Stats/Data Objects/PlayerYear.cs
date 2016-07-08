@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,20 +9,24 @@ namespace OOTP_Stats
 {
     public class PlayerYear : IEquatable<PlayerYear>, IComparable<PlayerYear>
     {
-        public string FirstName { get; }
-        public string LastName { get; }
         public int Year { get; }
+
+        [Browsable(false)]
+        public string FirstName { get; }
+
+        [Browsable(false)]
+        public string LastName { get; }
+
+        public string FullName
+        {
+            get { return FirstName + " " + LastName; }
+        }
 
         public PlayerYear( string first, string last, int year )
         {
             FirstName = first;
             LastName = last;
             Year = year;
-        }
-
-        public string FullName
-        {
-            get { return FirstName + " " + LastName;  }
         }
 
         public int CompareTo(PlayerYear other)

@@ -14,5 +14,15 @@ namespace OOTP_Stats
         {
             _batters = data.LoadBatters();
         }
+
+        public List<BattingYear> GetBattingList()
+        {
+             return _batters; 
+        }
+
+        public List<BattingYear> GetBattingList(string name)
+        {
+            return _batters = _batters.OrderByDescending(b => b.GetType().GetProperty(name).GetValue(b, null)).ToList();
+        }
     }
 }

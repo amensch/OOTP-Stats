@@ -51,7 +51,7 @@ namespace OOTP_Stats
                     batter.K = ConvertToInt(row, BattingYear.BattingYearIndex.K);
                     batter.BB = ConvertToInt(row, BattingYear.BattingYearIndex.BB);
                     batter.Games = ConvertToInt(row, BattingYear.BattingYearIndex.G);
-                    batter.ExtraBaseHits = ConvertToInt(row, BattingYear.BattingYearIndex.XBH);
+                    batter.XBH = ConvertToInt(row, BattingYear.BattingYearIndex.XBH);
                     batter.SB = ConvertToInt(row, BattingYear.BattingYearIndex.SB);
                     batter.PA = ConvertToInt(row, BattingYear.BattingYearIndex.PA);
                     batter.TB = ConvertToInt(row, BattingYear.BattingYearIndex.TB);
