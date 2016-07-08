@@ -24,6 +24,7 @@ namespace OOTP_Stats
             tsbCareer.CheckedChanged += CheckedChangedFormat;
             tsbYearByYear.CheckedChanged += CheckedChangedFormat;
             tsbSingleSeason.CheckedChanged += CheckedChangedFormat;
+            tsbTeam.CheckedChanged += CheckedChangedFormat;
 
             dgView.ColumnHeaderMouseClick += DgView_ColumnHeaderMouseClick;
 
