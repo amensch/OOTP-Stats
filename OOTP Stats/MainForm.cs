@@ -26,12 +26,29 @@ namespace OOTP_Stats
             tsbSingleSeason.CheckedChanged += CheckedChangedFormat;
             tsbTeam.CheckedChanged += CheckedChangedFormat;
 
+            dgView.RowPostPaint += DgView_RowPostPaint;
             dgView.ColumnHeaderMouseClick += DgView_ColumnHeaderMouseClick;
 
             GoogleSheetsData data = new GoogleSheetsData();
             _stats = new Stats(data);
 
             tsbSingleSeason.Checked = true;
+        }
+
+        private void DgView_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            string rowIndex = (e.RowIndex + 1).ToString();
+            Font rowFont = new Font(dgv.Font, FontStyle.Bold);
+           
+
+            StringFormat centerFormat = new StringFormat();
+            centerFormat.Alignment = StringAlignment.Center;
+            centerFormat.LineAlignment = StringAlignment.Center;
+
+            Rectangle headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, dgv.RowHeadersWidth, e.RowBounds.Height);
+            e.Graphics.DrawString(rowIndex, rowFont, SystemBrushes.InactiveCaptionText, headerBounds, centerFormat);
+
         }
 
         private void DgView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
