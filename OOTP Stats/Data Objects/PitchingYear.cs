@@ -41,10 +41,10 @@ namespace OOTP_Stats
             ER
         };
 
-        public PitchingYear() : base ("","",0)
+        public PitchingYear() : base ("","",0,false)
         { }
 
-        public PitchingYear(string first, string last, int year) : base(first, last, year)
+        public PitchingYear(string first, string last, int year, bool hall) : base(first, last, year, hall)
         { }
 
         public double IP

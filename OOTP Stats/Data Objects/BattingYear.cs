@@ -41,10 +41,10 @@ namespace OOTP_Stats
             TB
         };
 
-        public BattingYear() : base ("","",0)
+        public BattingYear() : base ("","",0,false)
         { }
 
-        public BattingYear(string first, string last, int year) : base(first, last, year)
+        public BattingYear(string first, string last, int year, bool hall) : base(first, last, year, hall)
         { }
 
         public double AVG

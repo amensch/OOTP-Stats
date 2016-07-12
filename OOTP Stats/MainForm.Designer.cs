@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dgView = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -38,6 +38,7 @@
             this.tsbCareer = new System.Windows.Forms.ToolStripButton();
             this.tsbSingleSeason = new System.Windows.Forms.ToolStripButton();
             this.tsbTeam = new System.Windows.Forms.ToolStripButton();
+            this.tsbHallOfFame = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -48,14 +49,14 @@
             this.dgView.AllowUserToDeleteRows = false;
             this.dgView.AllowUserToOrderColumns = true;
             this.dgView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgView.Location = new System.Drawing.Point(0, 25);
@@ -72,7 +73,8 @@
             this.tsbYearByYear,
             this.tsbCareer,
             this.tsbSingleSeason,
-            this.tsbTeam});
+            this.tsbTeam,
+            this.tsbHallOfFame});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(916, 25);
@@ -109,7 +111,7 @@
             this.tsbYearByYear.Image = ((System.Drawing.Image)(resources.GetObject("tsbYearByYear.Image")));
             this.tsbYearByYear.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbYearByYear.Name = "tsbYearByYear";
-            this.tsbYearByYear.Size = new System.Drawing.Size(74, 22);
+            this.tsbYearByYear.Size = new System.Drawing.Size(76, 22);
             this.tsbYearByYear.Text = "Year by Year";
             this.tsbYearByYear.Click += new System.EventHandler(this.tsbYearByYear_Click);
             // 
@@ -145,9 +147,19 @@
             this.tsbTeam.Image = ((System.Drawing.Image)(resources.GetObject("tsbTeam.Image")));
             this.tsbTeam.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbTeam.Name = "tsbTeam";
-            this.tsbTeam.Size = new System.Drawing.Size(40, 22);
+            this.tsbTeam.Size = new System.Drawing.Size(41, 22);
             this.tsbTeam.Text = "Team";
             this.tsbTeam.Click += new System.EventHandler(this.tsbTeam_Click);
+            // 
+            // tsbHallOfFame
+            // 
+            this.tsbHallOfFame.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbHallOfFame.Image = ((System.Drawing.Image)(resources.GetObject("tsbHallOfFame.Image")));
+            this.tsbHallOfFame.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbHallOfFame.Name = "tsbHallOfFame";
+            this.tsbHallOfFame.Size = new System.Drawing.Size(78, 22);
+            this.tsbHallOfFame.Text = "Hall of Fame";
+            this.tsbHallOfFame.Click += new System.EventHandler(this.tsbHallOfFame_Click);
             // 
             // MainForm
             // 
@@ -176,6 +188,7 @@
         private System.Windows.Forms.ToolStripButton tsbCareer;
         private System.Windows.Forms.ToolStripButton tsbSingleSeason;
         private System.Windows.Forms.ToolStripButton tsbTeam;
+        private System.Windows.Forms.ToolStripButton tsbHallOfFame;
     }
 }
 

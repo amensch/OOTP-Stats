@@ -25,6 +25,11 @@ namespace OOTP_Stats
             return _batters = _batters.OrderByDescending(b => b.GetType().GetProperty(sortColumnName).GetValue(b, null)).ToList();
         }
 
+        public List<BattingYear> GetBattingHallList()
+        {
+            return _batters = _batters.Where(b => b.HallOfFame == true).ToList();
+        }
+
         public List<BattingYear> GetCareerList()
         {
             return _batters.GroupBy(b => new { b.FullName })

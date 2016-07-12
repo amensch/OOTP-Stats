@@ -26,6 +26,11 @@ namespace OOTP_Stats
                 return _pitchers = _pitchers.OrderByDescending(p => p.GetType().GetProperty(name).GetValue(p, null)).ToList();
         }
 
+        public List<PitchingYear> GetPitchersHallList()
+        {
+            return _pitchers = _pitchers.Where(p => p.HallOfFame == true).ToList();
+        }
+
         public List<PitchingYear> GetCareerList()
         {
             return _pitchers.GroupBy(b => new { b.FullName })

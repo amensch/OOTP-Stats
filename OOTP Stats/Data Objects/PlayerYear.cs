@@ -14,6 +14,7 @@ namespace OOTP_Stats
         public string LastName { get; set; }
         public int FirstYear { get; set; }
         public int LastYear { get; set; }
+        public bool HallOfFame { get; set; }
 
         public string FullName
         {
@@ -25,11 +26,12 @@ namespace OOTP_Stats
             get { return FirstYear.ToString() + "-" + LastYear.ToString(); }
         }
 
-        public PlayerYear( string first, string last, int year )
+        public PlayerYear( string first, string last, int year, bool hall )
         {
             FirstName = first;
             LastName = last;
             Year = year;
+            HallOfFame = hall;
         }
 
         public int CompareTo(PlayerYear other)

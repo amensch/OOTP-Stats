@@ -23,25 +23,51 @@ namespace OOTP_Stats
         private string spreadsheetId = "1Gvhz4RLGTe7TBkC6-zJnqcUo_D6Crd16N8CBUGozuJU";
         private SheetsService service;
 
+        List<string> hallList;
+
         public GoogleSheetsData()
         {
             Connect();
+            LoadHallOfFame();
         }
 
+        private void LoadHallOfFame()
+        {
+            hallList = new List<string>();
+            var data = GetData("Hall of Fame!B1:B300");
+            string name;
+
+            foreach( var row in data )
+            {
+                if( row.Count > 0 && ConvertToString(row, 0) != string.Empty )
+                {
+                    name = ConvertToString(row, 0);
+                    if( name != "Batters" && name != "Pitchers" && name != "Name")
+                    {
+                        hallList.Add(name);
+                    }
+                }
+            }
+        }
 
         public List<BattingYear> LoadBatters()
         {
             var data = GetData("Raw Hitting Data!A2:Q");
             var list = new List<BattingYear>();
+            string name;
+            bool hall;
             foreach (var row in data)
             {
                 if (row.Count > 0 && ConvertToString(row, BattingYear.BattingYearIndex.Year) != string.Empty)
                 {
 
+                    name = ConvertToString(row, BattingYear.BattingYearIndex.FirstName) + " " + ConvertToString(row, BattingYear.BattingYearIndex.LastName);
+                    hall = hallList.Contains(name);
                     var batter = new BattingYear(
                         ConvertToString(row, BattingYear.BattingYearIndex.FirstName),
                         ConvertToString(row, BattingYear.BattingYearIndex.LastName),
-                        ConvertToInt(row, BattingYear.BattingYearIndex.Year)
+                        ConvertToInt(row, BattingYear.BattingYearIndex.Year),
+                        hall
                         );
 
                     batter.AB = ConvertToInt(row, BattingYear.BattingYearIndex.AB);
@@ -67,15 +93,20 @@ namespace OOTP_Stats
         {
             var data = GetData("Raw Pitching Data!A2:P");
             var list = new List<PitchingYear>();
+            string name;
+            bool hall;
             foreach (var row in data)
             {
                 if (row.Count > 0 && ConvertToString(row, PitchingYear.PitchingYearIndex.Year) != string.Empty)
                 {
 
+                    name = ConvertToString(row, PitchingYear.PitchingYearIndex.FirstName) + " " + ConvertToString(row, PitchingYear.PitchingYearIndex.LastName);
+                    hall = hallList.Contains(name);
                     var pitcher = new PitchingYear(
                         ConvertToString(row, PitchingYear.PitchingYearIndex.FirstName),
                         ConvertToString(row, PitchingYear.PitchingYearIndex.LastName),
-                        ConvertToInt(row, PitchingYear.PitchingYearIndex.Year)
+                        ConvertToInt(row, PitchingYear.PitchingYearIndex.Year),
+                        hall
                         );
 
                     pitcher.BB = ConvertToInt(row, PitchingYear.PitchingYearIndex.BB);
@@ -158,6 +189,11 @@ Columns within a row are accessed via a numeric index.
             int value = 0;
             int.TryParse(row[(int)index].ToString(), out value);
             return value;
+        }
+
+        private string ConvertToString(IList<object> row, int index)
+        {
+            return row[(int)index].ToString();
         }
 
         private string ConvertToString(IList<object> row, BattingYear.BattingYearIndex index)

@@ -21,6 +21,7 @@ namespace OOTP_Stats
             // set event handlers
             tsbBatters.CheckedChanged += CheckedChangedFormat;
             tsbPitchers.CheckedChanged += CheckedChangedFormat;
+            tsbHallOfFame.CheckedChanged += CheckedChangedFormat;
             tsbCareer.CheckedChanged += CheckedChangedFormat;
             tsbYearByYear.CheckedChanged += CheckedChangedFormat;
             tsbSingleSeason.CheckedChanged += CheckedChangedFormat;
@@ -73,7 +74,7 @@ namespace OOTP_Stats
         {
             tsbBatters.Checked = true;
             tsbPitchers.Checked = false;
-
+            tsbHallOfFame.Checked = false;
             RefreshGrid();
         }
 
@@ -81,9 +82,21 @@ namespace OOTP_Stats
         {
             tsbBatters.Checked = false;
             tsbPitchers.Checked = true;
+            tsbHallOfFame.Checked = false;
 
             RefreshGrid();
         }
+
+
+        private void tsbHallOfFame_Click(object sender, EventArgs e)
+        {
+            tsbBatters.Checked = false;
+            tsbPitchers.Checked = false;
+            tsbHallOfFame.Checked = true;
+
+            RefreshGrid();
+        }
+
 
         private void tsbSingleSeason_Click(object sender, EventArgs e)
         {
@@ -239,6 +252,31 @@ namespace OOTP_Stats
                     dgView.AutoResizeColumns();
                 }
             }
+            else if (tsbHallOfFame.Checked)
+            {
+
+                List<BattingYear> batters = _stats.Batters.GetBattingHallList();
+                List<PitchingYear> pitchers = _stats.Pitchers.GetPitchersHallList();
+
+                List<PlayerYear> players = new List<PlayerYear>();
+                players.AddRange(batters);
+                players.AddRange(pitchers);
+                players.Sort((a,b) => a.Year.CompareTo(b.Year));
+
+                dgView.DataSource = players;
+
+                // hide columns
+                dgView.Columns["FirstName"].Visible = false;
+                dgView.Columns["LastName"].Visible = false;
+                dgView.Columns["FirstYear"].Visible = false;
+                dgView.Columns["LastYear"].Visible = false;
+                dgView.Columns["HallOfFame"].Visible = false;
+                dgView.Columns["Years"].Visible = false;
+
+                // resize columns to fit
+                dgView.AutoResizeColumns();
+            }
+
         }
 
     }
