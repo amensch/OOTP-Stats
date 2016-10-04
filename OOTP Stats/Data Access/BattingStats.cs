@@ -85,11 +85,34 @@ namespace OOTP_Stats
             return GetTeamList().OrderByDescending(b => b.GetType().GetProperty(sortColumnName).GetValue(b, null)).ToList();
         }
 
-        public List<YearByYearQuery> YearByYear(string columnName)
+        public List<BattingYear> YearByYear(string columnName)
         {
+
+            // Get the max value for that stat category for the year.
+            var maxValues = from b in _batters
+                            group b by b.Year into g
+                            select new { Year = g.Key, maxValue = g.Max(p => p.GetType().GetProperty(columnName).GetValue(p, null)) };
+
+            // Build a list of matches
+            var results = new List<BattingYear>();
+
+            foreach( var maxValue in maxValues )
+            {
+                var matches = from b in _batters
+                              where (b.Year == maxValue.Year) && 
+                                    //((b.GetType().GetProperty(columnName).GetValue(b, null)) == maxValue.maxValue)
+                                    (b.PA == (int)maxValue.maxValue)
+                                select b;
+                results.AddRange(matches);
+            }
+
+            return results.OrderByDescending(b => b.Year).ToList();
+                    
+                    
+
             //BattingYear batter = new BattingYear();
 
-            //if( batter.GetType().GetProperty(columnName).PropertyType == typeof(int) )
+            //if (batter.GetType().GetProperty(columnName).PropertyType == typeof(int))
             //{
 
             //}
@@ -100,15 +123,21 @@ namespace OOTP_Stats
             //else if (batter.GetType().GetProperty(columnName).PropertyType == typeof(string))
             //{
 
-            //}
 
-            return _batters.GroupBy(b => new { b.Year })
-                           .Select(y => new YearByYearQuery
-                           {
-                               Year = y.Min( z => z.Year),
-                               Name = y.Min( z => z.FullName ),
-                               Result = (double)y.Max( p => p.GetType().GetProperty(columnName).GetValue(p, null) )
-                           }).ToList();
+            //return _batters.GroupBy(b => new { b.Year })
+            //               .Select(y => new YearByYearQuery
+            //               {
+            //                   Year = y.Min( z => z.Year),
+            //                   Name = y.Min( z => z.FullName ),
+            //                   Result = (double)y.Max( p => p.GetType().GetProperty(columnName).GetValue(p, null) )
+            //               }).ToList();
+
+
+            //var results = from b in _batters join m in maxValues on new { b.Year, b.PA } equals new { m.Year, (int)m.maxValue }
+            //              select new {}
+
+
+
 
         }
     }

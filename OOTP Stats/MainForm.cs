@@ -168,8 +168,9 @@ namespace OOTP_Stats
                 }
                 else if (tsbYearByYear.Checked)
                 {
-                    _stats.Batters.YearByYear("PA");
-                    // TODO
+                    dgView.DataSource = _stats.Batters.YearByYear("PA");
+
+                    newsource = true;
                 }
                 else if( tsbTeam.Checked)
                 {

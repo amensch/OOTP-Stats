@@ -10,6 +10,6 @@ namespace OOTP_Stats
     {
         public string Name{ get; set;}
         public int Year { get; set; }
-        public double Result { get; set; }
+        public object Result { get; set; }
     }
 }
