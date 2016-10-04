@@ -50,7 +50,8 @@ namespace OOTP_Stats
                     BB = y.Sum(z => z.BB),
                     SB = y.Sum(z => z.SB),
                     XBH = y.Sum(z => z.XBH),
-                    TB = y.Sum(z => z.TB)
+                    TB = y.Sum(z => z.TB),
+                    HallOfFame = y.All(z => z.HallOfFame)
                 }).ToList();
         }
 

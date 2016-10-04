@@ -51,7 +51,8 @@ namespace OOTP_Stats
                     HR = y.Sum(z => z.HR),
                     Hits = y.Sum(z => z.Hits),
                     ER = y.Sum(z => z.ER),
-                    Outs = y.Sum(z => z.Outs)
+                    Outs = y.Sum(z => z.Outs),
+                    HallOfFame = y.All(z => z.HallOfFame)
                 }).ToList();
         }
 
